@@ -1,15 +1,12 @@
 {
-  "name": "TaskFlow App",
+  "name": "taskflow-app",
   "version": "1.0.0",
   "description": "Advanced task management application with real-time synchronization",
   "main": "index.html",
   "scripts": {
-    "start": "npx http-server -p 8080 -c-1",
-    "dev": "npx live-server --port=8080 --open=index.html",
-    "build": "echo 'Building for production...' && npm run minify",
-    "minify": "echo 'Minifying assets...'",
-    "test": "echo 'Running tests...'",
-    "deploy": "echo 'Deploying to production...'"
+    "start": "echo 'Open index.html in your browser'",
+    "dev": "echo 'Open index.html in your browser'",
+    "build": "echo 'No build required - static site'"
   },
   "keywords": [
     "task-management",
@@ -17,18 +14,14 @@
     "pwa",
     "web-app"
   ],
-  "author": "Your Name",
+  "author": "codegripper",
   "license": "MIT",
-  "devDependencies": {
-    "http-server": "^14.1.1",
-    "live-server": "^1.2.2"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/taskflow.git"
+    "url": "https://github.com/codegripper/TaskFlow---Advanced-Task-Management-App.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/taskflow/issues"
+    "url": "https://github.com/codegripper/TaskFlow---Advanced-Task-Management-App/issues"
   },
-  "homepage": "https://yourusername.github.io/taskflow"
+  "homepage": "https://github.com/codegripper/TaskFlow---Advanced-Task-Management-App"
 }
