@@ -1,0 +1,84 @@
+a{color:#8BC34A;}
+.ef-tabs nav li a:hover,.ef-tabs nav li a:focus{color: #8BC34A;}
+/* Bar */
+.ef-tabs-style-bar nav li.tab-current a{background: #8BC34A;color: #FFF;}
+/* Circle */
+.ef-tabs-style-circle nav li.tab-current a{color: #8BC34A;}
+.ef-tabs-style-circle nav li::before{border: 1px solid #8BC34A;}
+/* Circle Fill */
+.ef-tabs-style-circlefill nav li a:hover,.ef-tabs-style-circlefill nav li a:focus{color: #FFF;}
+.ef-tabs-style-circlefill nav ul li {border-right: 1px solid #8BC34A;}
+.ef-tabs-style-circlefill nav li::before{border: 1px solid #8BC34A;background: #8BC34A;}
+/* Fillup */
+.ef-tabs-style-fillup nav ul li a::after{border: 1px solid #8BC34A;background: #8BC34A;}
+/* Flip */
+.ef-tabs-style-flip nav li.tab-current a {color: #8BC34A;}
+/* iconbox */
+.ef-tabs-style-iconbox nav li.tab-current a {background: #8BC34A; color:#FFF;}
+.ef-tabs-style-iconbox nav li.tab-current a::after{border-top-color: #8BC34A;}
+/*iconfall*/
+.ef-tabs-style-iconfall nav li.tab-current a{color: #8BC34A;}
+.ef-tabs-style-iconfall nav li::before{background: #8BC34A;}
+/*linebox*/
+.ef-tabs-style-linebox nav a:hover::after, .ef-tabs-style-linebox nav a:focus::after, .ef-tabs-style-linebox nav li.tab-current a::after{background: #8BC34A;}
+.ef-tabs-style-linebox nav li.tab-current a{color: #FFF;}
+/*linemove*/
+.ef-tabs-style-linemove nav li.tab-current a{color: #8BC34A;}
+.ef-tabs-style-linemove nav li:last-child::before{background: #8BC34A;}
+/*linetriangle*/
+.ef-tabs-style-linetriangle nav li.tab-current a{color: #8BC34A;}
+/*shape*/
+.ef-tabs-style-shape nav li a {color: #fff;}
+.ef-tabs-style-shape nav li a:hover,.ef-tabs-style-shape nav li a:focus{color:#FFF;}
+.ef-tabs-style-shape nav ul li.tab-current a:hover,.ef-tabs-style-shape nav ul li.tab-current a:focus{color:#8BC34A;}
+.ef-tabs-style-shape nav li a:hover span {background-color: #8BC34A;}
+.ef-tabs-style-shape nav li a:hover svg {fill: #8BC34A;}
+.ef-tabs-style-shape nav li.tab-current a span {background: #fff;color: #8BC34A;}
+.ef-tabs-style-shape nav li.tab-current a:hover svg{ fill: #FFF;}
+/* topline*/
+.ef-tabs-style-topline nav li.tab-current {border-top-color: #8BC34A;}
+.ef-tabs-style-topline nav li.tab-current a {box-shadow: inset 0 3px 0 #8BC34A;color: #8BC34A;}
+/*tzoid*/
+.ef-tabs-style-tzoid nav ul li a:hover, .ef-tabs-style-tzoid nav ul li a:focus {color: #8BC34A;}
+.ef-tabs-style-tzoid nav ul li.tab-current a {color: #FFF;}
+.ef-tabs-style-tzoid nav ul li.tab-current a::after {background-color: #8BC34A;}
+/*underline*/
+.ef-tabs-style-underline nav li.tab-current a {color: #8BC34A;}
+.ef-tabs-style-underline nav li a::after{background: #8BC34A;}
+/*Input Fields*/
+input.btn{background: #8BC34A;}
+input.input:focus, input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus {
+	border-color: rgba(139,195,74, 0.8); 
+	box-shadow: inset 0 1px rgba(34, 25, 25, 0.15),0 1px rgba(255, 255, 255, 0.8),0 0 14px rgba(139,195,74, 0.35);
+    -moz-box-shadow: inset 0 1px rgba(34,25,25,0.15),0 1px rgba(255,255,255,0.8),0 0 14px rgba(139,195,74, 0.35);
+    -webkit-box-shadow: inset 0 1px rgba(34, 25, 25, 0.15),0 1px rgba(255, 255, 255, 0.8),0 0 14px rgba(139,195,74, 0.35);
+}
+/* Social */
+.twitter,.facebook, .gplus, .linkedin{
+	background: rgba(139,195,74, 0.7);
+	border: 1px solid #8BC34A;
+	box-shadow: inset 0 1px rgba(34, 25, 25, 0.15),0 1px rgba(255, 255, 255, 0.8),0 0 14px rgba(139,195,74, 0.35);
+}
+blockquote{
+	border-left: 5px solid #8BC34A;
+}
+.dropcap{
+	color: #8BC34A; 
+}
+.highlight {
+    background-color: #8BC34A; 
+    color: #fff;
+}
+
+/*Tabel*/
+table th{
+	background-color: rgba(139,195,74, 0.9); 
+    color: #fff;
+}
+th,td{
+	border: 1px solid #8BC34A;
+}
+table tr.alt td{
+	background-color: rgba(139,195,74, 0.2); 
+	color: #000; 
+}

@@ -1,0 +1,19 @@
+# TaskFlow
+node_modules/
+dist/
+.cache/
+.env
+.env.local
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.vscode/
+.idea/
+coverage/
+.nyc_output/
+package-lock.json
+yarn.lock
+*.swp
+*.swo
+*~

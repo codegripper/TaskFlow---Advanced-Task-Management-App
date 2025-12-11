@@ -1,0 +1,502 @@
+/**
+ * Mobile-Specific Enhancements for TaskFlow
+ */
+
+/* Prevent text selection on tap (for buttons and interactive elements) */
+.btn, .filter-btn, .auth-tab-btn, .task-checkbox, .btn-icon, .close-modal {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Smooth scrolling for entire app */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Better scrolling for mobile */
+.content-wrap,
+.modal-content,
+.task-list,
+.project-grid {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Touch-friendly active states */
+.btn:active,
+.filter-btn:active,
+.auth-tab-btn:active,
+.btn-icon:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+/* Pull-to-refresh indicator space */
+@supports (-webkit-overflow-scrolling: touch) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
+/* iOS Safari bottom bar fix */
+@supports (-webkit-touch-callout: none) {
+    .modal-content {
+        max-height: -webkit-fill-available;
+    }
+}
+
+/* Android Chrome address bar fix */
+@media screen and (max-width: 768px) {
+    .body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Better focus states for accessibility on mobile */
+@media (hover: none) {
+    input:focus,
+    textarea:focus,
+    select:focus,
+    button:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+}
+
+/* Swipe gestures helper */
+.task-item,
+.project-card {
+    touch-action: pan-y;
+}
+
+/* Mobile menu improvements */
+@media screen and (max-width: 768px) {
+    /* Fixed header for mobile */
+    .app-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Bottom navigation alternative (optional) */
+    .ef-tabs nav {
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: -10px -10px 20px -10px;
+        padding: 0 10px;
+    }
+
+    /* Optimize tab scrolling */
+    .ef-tabs nav ul {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    .ef-tabs nav ul::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    /* Add scroll indicators */
+    .ef-tabs nav::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        background: linear-gradient(to left, rgba(255, 255, 255, 0.98), transparent);
+        pointer-events: none;
+    }
+
+    /* Floating action button style for add buttons */
+    #addTaskBtn,
+    #addProjectBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 98;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #addTaskBtn span,
+    #addProjectBtn span {
+        display: none;
+    }
+
+    #addTaskBtn i,
+    #addProjectBtn i {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    /* Hide FAB when in other sections */
+    #section-projects:not(.content-current) ~ #addProjectBtn,
+    #section-tasks:not(.content-current) ~ #addTaskBtn {
+        display: none;
+    }
+
+    /* Improve modal presentation on mobile */
+    .modal {
+        align-items: flex-end;
+        padding-bottom: 0;
+    }
+
+    .modal-content {
+        border-radius: 20px 20px 0 0;
+        max-height: 85vh;
+        animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    /* Pull indicator for modals */
+    .modal-content::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+    }
+
+    /* Improve form inputs on mobile */
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 10px;
+    }
+
+    /* Custom select arrow for mobile */
+    .form-group select {
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        padding-right: 40px;
+    }
+
+    /* Improve checkbox visibility on mobile */
+    input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        background: white;
+        position: relative;
+        cursor: pointer;
+    }
+
+    input[type="checkbox"]:checked {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /* Improve date picker on mobile */
+    input[type="date"] {
+        min-height: 44px;
+        padding: 12px;
+    }
+
+    /* Better color picker on mobile */
+    input[type="color"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        padding: 4px;
+        cursor: pointer;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+        border: none;
+        border-radius: 4px;
+    }
+
+    /* Toast notifications from bottom on mobile */
+    .notification {
+        bottom: 20px;
+        left: 10px;
+        right: 10px;
+        border-radius: 12px;
+    }
+
+    /* Skeleton loading states for better perceived performance */
+    .loading .task-item,
+    .loading .project-card,
+    .loading .stat-card {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+        0% {
+            background-position: 200% 0;
+        }
+        100% {
+            background-position: -200% 0;
+        }
+    }
+
+    /* Ripple effect for touch feedback */
+    .btn,
+    .filter-btn,
+    .task-item,
+    .project-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::after,
+    .filter-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:active::after,
+    .filter-btn:active::after {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+/* Landscape mode optimizations */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .app-header {
+        padding: 10px 15px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .modal-content {
+        max-height: 75vh;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 360px) {
+    .filter-btn {
+        min-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .task-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* Dark mode mobile optimizations */
+@media screen and (max-width: 768px) {
+    [data-theme="dark"] .app-header,
+    [data-theme="dark"] .ef-tabs nav {
+        background: rgba(30, 30, 30, 0.98);
+    }
+
+    [data-theme="dark"] .modal-content {
+        background: #2d2d2d;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .btn,
+    .task-item,
+    .project-card {
+        border: 2px solid currentColor;
+    }
+
+    input,
+    textarea,
+    select {
+        border: 2px solid currentColor;
+    }
+}
+
+/* PWA Install Prompt */
+.install-prompt {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    animation: slideUpPrompt 0.3s ease;
+}
+
+@keyframes slideUpPrompt {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.install-prompt-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.install-prompt i {
+    font-size: 24px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.install-prompt span {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.close-install {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+/* Keyboard open state */
+.keyboard-open .app-header {
+    display: none;
+}
+
+.keyboard-open #addTaskBtn,
+.keyboard-open #addProjectBtn {
+    display: none;
+}
+
+/* Touch state for tabs */
+.ef-tabs nav ul li.touching {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Mobile device specific tweaks */
+.mobile-device .btn {
+    cursor: pointer;
+}
+
+.mobile-device input,
+.mobile-device textarea,
+.mobile-device select {
+    font-size: 16px !important; /* Prevent zoom */
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari */
+    .modal-content {
+        max-height: calc(100vh - 100px);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+}
+
+/* Android specific fixes */
+@media screen and (max-width: 768px) {
+    /* Fix Chrome address bar */
+    .body {
+        min-height: 100vh;
+        min-height: calc(var(--vh, 1vh) * 100);
+    }
+}

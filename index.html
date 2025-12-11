@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="TaskFlow">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="TaskFlow - Advanced task management application with real-time sync">
+    <meta name="format-detection" content="telephone=no">
+    <title>TaskFlow - Advanced Task Management App</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/ef-tabs.css">
+    <link rel="stylesheet" href="css/ef-tabs-light-green.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body class="bg-yellow">
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" data-tab="login">Login</button>
+                <button class="auth-tab-btn" data-tab="register">Register</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+                <h2>Welcome Back</h2>
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div class="auth-message" id="loginMessage"></div>
+            </form>
+            
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form hidden">
+                <h2>Create Account</h2>
+                <div class="form-group">
+                    <input type="text" id="registerName" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <div class="auth-message" id="registerMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="body">
+        <!-- User Header -->
+        <div class="app-header">
+            <div class="user-info">
+                <span id="userName" class="user-name">Guest</span>
+                <button id="logoutBtn" class="btn btn-small hidden">Logout</button>
+                <button id="loginBtn" class="btn btn-small">Login</button>
+            </div>
+            <div class="sync-status">
+                <span id="syncIndicator" class="sync-indicator">
+                    <i class="fa fa-circle"></i> Offline
+                </span>
+            </div>
+        </div>
+
+        <section>
+            <div class="ef-tabs ef-tabs-style-topline" data-effect="fade_left_fade_right">
+                <nav>
+                    <ul>
+                        <li><a href="#section-dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
+                        <li><a href="#section-tasks"><i class="fa fa-tasks"></i><span>Tasks</span></a></li>
+                        <li><a href="#section-projects"><i class="fa fa-folder"></i><span>Projects</span></a></li>
+                        <li><a href="#section-analytics"><i class="fa fa-bar-chart"></i><span>Analytics</span></a></li>
+                        <li><a href="#section-settings"><i class="fa fa-cog"></i><span>Settings</span></a></li>
+                    </ul>
+                </nav>
+                <div class="content-wrap">
+                    <!-- Dashboard Section -->
+                    <section id="section-dashboard">
+                        <h2>Dashboard Overview</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <i class="fa fa-check-circle"></i>
+                                <h3 id="completedTasks">0</h3>
+                                <p>Completed Tasks</p>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fa fa-clock-o"></i>
+                                <h3 id="pendingTasks">0</h3>
+                                <p>Pending Tasks</p>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fa fa-folder-open"></i>
+                                <h3 id="activeProjects">0</h3>
+                                <p>Active Projects</p>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fa fa-trophy"></i>
+                                <h3 id="productivityScore">0%</h3>
+                                <p>Productivity</p>
+                            </div>
+                        </div>
+                        
+                        <div class="recent-activity">
+                            <h3>Recent Activity</h3>
+                            <ul id="activityList" class="activity-list">
+                                <li>Welcome to TaskFlow! Start by creating your first task.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Tasks Section -->
+                    <section id="section-tasks">
+                        <div class="section-header">
+                            <h2>Task Management</h2>
+                            <button id="addTaskBtn" class="btn btn-primary">
+                                <i class="fa fa-plus"></i> Add Task
+                            </button>
+                        </div>
+                        
+                        <div class="task-filters">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="pending">Pending</button>
+                            <button class="filter-btn" data-filter="completed">Completed</button>
+                            <button class="filter-btn" data-filter="high">High Priority</button>
+                        </div>
+                        
+                        <div class="search-box">
+                            <input type="text" id="taskSearch" placeholder="Search tasks...">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        
+                        <div id="taskList" class="task-list">
+                            <!-- Tasks will be dynamically added here -->
+                        </div>
+                    </section>
+
+                    <!-- Projects Section -->
+                    <section id="section-projects">
+                        <div class="section-header">
+                            <h2>Project Management</h2>
+                            <button id="addProjectBtn" class="btn btn-primary">
+                                <i class="fa fa-plus"></i> New Project
+                            </button>
+                        </div>
+                        
+                        <div id="projectList" class="project-grid">
+                            <!-- Projects will be dynamically added here -->
+                        </div>
+                    </section>
+
+                    <!-- Analytics Section -->
+                    <section id="section-analytics">
+                        <h2>Analytics & Reports</h2>
+                        
+                        <div class="analytics-section">
+                            <h3>Task Completion Trends</h3>
+                            <div class="chart-container">
+                                <canvas id="completionChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-section">
+                            <h3>Time Distribution</h3>
+                            <div class="time-stats">
+                                <div class="time-stat">
+                                    <span class="label">Today:</span>
+                                    <span id="todayTime" class="value">0h</span>
+                                </div>
+                                <div class="time-stat">
+                                    <span class="label">This Week:</span>
+                                    <span id="weekTime" class="value">0h</span>
+                                </div>
+                                <div class="time-stat">
+                                    <span class="label">This Month:</span>
+                                    <span id="monthTime" class="value">0h</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-section">
+                            <h3>Project Progress</h3>
+                            <div id="projectProgress" class="progress-list">
+                                <!-- Progress bars will be added here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Settings Section -->
+                    <section id="section-settings">
+                        <h2>Settings</h2>
+                        
+                        <div class="settings-section">
+                            <h3>Appearance</h3>
+                            <div class="setting-item">
+                                <label for="themeSelect">Theme:</label>
+                                <select id="themeSelect">
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="colorScheme">Color Scheme:</label>
+                                <select id="colorScheme">
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="purple">Purple</option>
+                                    <option value="orange">Orange</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3>Notifications</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="emailNotifications" checked>
+                                    Email Notifications
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="pushNotifications" checked>
+                                    Push Notifications
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="soundEnabled">
+                                    Sound Effects
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3>Data Management</h3>
+                            <button id="exportDataBtn" class="btn">
+                                <i class="fa fa-download"></i> Export Data
+                            </button>
+                            <button id="importDataBtn" class="btn">
+                                <i class="fa fa-upload"></i> Import Data
+                            </button>
+                            <button id="clearDataBtn" class="btn btn-danger">
+                                <i class="fa fa-trash"></i> Clear All Data
+                            </button>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3>API Configuration</h3>
+                            <div class="setting-item">
+                                <label for="apiEndpoint">API Endpoint:</label>
+                                <input type="text" id="apiEndpoint" placeholder="https://api.example.com">
+                            </div>
+                            <div class="setting-item">
+                                <label for="apiKey">API Key:</label>
+                                <input type="password" id="apiKey" placeholder="Enter your API key">
+                            </div>
+                            <button id="testApiBtn" class="btn">Test Connection</button>
+                            <div id="apiStatus" class="api-status"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="taskModalTitle">Add New Task</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Task Title:</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Description:</label>
+                    <textarea id="taskDescription" rows="4"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskPriority">Priority:</label>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueDate">Due Date:</label>
+                        <input type="date" id="taskDueDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taskProject">Project:</label>
+                    <select id="taskProject">
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Task</button>
+                    <button type="button" class="btn cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create New Project</h2>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectName">Project Name:</label>
+                    <input type="text" id="projectName" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Description:</label>
+                    <textarea id="projectDescription" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="projectColor">Color:</label>
+                    <input type="color" id="projectColor" value="#4CAF50">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Create Project</button>
+                    <button type="button" class="btn cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="js/jquery.transit.js"></script>
+    <script src="js/ef-tabs.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/mobile.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Initialize App -->
+    <script>
+        // Initialize tabs
+        (function() {
+            [].slice.call(document.querySelectorAll('.ef-tabs')).forEach(function(el) {
+                new efTabs(el);
+            });
+        })();
+        
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed'));
+        }
+    </script>
+</body>
+</html>
